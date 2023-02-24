@@ -4,7 +4,7 @@ Enemy::Enemy() {
 	setType("Enemy");
 	setSprite("testbox"); // Remove when other enemy classes created
 	setDirection(df::Vector(-1, 0));
-	setSpeed(1);
+	setSpeed(move_speed);
     setRandomPosition();
 }
 
@@ -26,6 +26,8 @@ void Enemy::setRandomPosition() {
 int Enemy::eventHandler(const df::Event* p_e) {
     if (p_e->getType() == df::OUT_EVENT) {
         setRandomPosition();
+        df::EventView ev(SCORE_STRING, 1, true);
+        WM.onEvent(&ev);
         return 1;
     }
     return 0;

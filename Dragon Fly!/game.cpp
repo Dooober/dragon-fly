@@ -33,4 +33,5 @@ void loadResources(void) {
 void populateWorld(void) {
     new Hero();
     new Enemy();
+    new Score();
 }

@@ -1,6 +1,8 @@
 #include "ViewObject.h"
 
-class Score : df::ViewObject {
+#define SCORE_STRING "Score"
+
+class Score : public df::ViewObject {
 public:
 	Score();
 };
