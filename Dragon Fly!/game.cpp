@@ -2,6 +2,7 @@
 #include "LogManager.h"
 #include "ResourceManager.h"
 #include "Hero.h"
+#include "Enemy.h"
 
 void loadResources(void);
 void populateWorld(void);
@@ -26,8 +27,10 @@ int main(int argc, char* argv[]) {
 
 void loadResources(void) {
     RM.loadSprite("sprites/dragonfly-spr.txt", "dragonfly");
+    RM.loadSprite("sprites/testbox-spr.txt", "testbox");
 }
 
 void populateWorld(void) {
     new Hero();
+    new Enemy();
 }
