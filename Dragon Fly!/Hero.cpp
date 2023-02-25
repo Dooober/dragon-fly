@@ -1,4 +1,3 @@
-// Engine includes.
 #include "GameManager.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
@@ -6,9 +5,10 @@
 #include "EventStep.h"
 #include "EventCollision.h"
 #include "EventOut.h"
-
-// Game includes.
 #include "Hero.h"
+#include "Bug.h"
+#include "Flower.h"
+#include "PowerUp.h"
 
 Hero::Hero() {
     // Link to "ship" sprite.
@@ -18,7 +18,7 @@ Hero::Hero() {
     setType("Hero");
 
     // Set starting location.
-    df::Vector p(-7, 11);
+    df::Vector p(-7, WM.getView().getVertical() / 2);
     setPosition(p);
 
     fallSpeed = 0;
@@ -42,6 +42,38 @@ int Hero::eventHandler(const df::Event* p_e) {
         return 1;
     }
     if (p_e->getType() == df::COLLISION_EVENT) {
+        const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
+        LM.writeLog("Collision between %c, %c\n", p_collision_event->getObject1()->getType().c_str(), p_collision_event->getObject2()->getType().c_str());
+        if ((p_collision_event->getObject1()->getType() == "PowerUp") && (p_collision_event->getObject2()->getType() == "Hero")) {
+            // Delete Powerup and all Enemies
+            WM.markForDelete(p_collision_event->getObject1());
+            df::ObjectList all_enemies = WM.objectsOfType("Enemy");
+            df::ObjectListIterator li(&all_enemies);
+            while (!li.isDone()) {
+                WM.markForDelete(li.currentObject());
+                li.next();
+            }
+            // Add them back
+            new Flower();
+            new Bug();
+            new PowerUp();
+            return 1;
+        } else if ((p_collision_event->getObject1()->getType() == "Hero") && (p_collision_event->getObject2()->getType() == "PowerUp")) {
+            // Delete Powerup and all Enemies
+            WM.markForDelete(p_collision_event->getObject1());
+            df::ObjectList all_enemies = WM.objectsOfType("Enemy");
+            df::ObjectListIterator li(&all_enemies);
+            while (!li.isDone()) {
+                WM.markForDelete(li.currentObject());
+                li.next();
+            }
+            // Add them back
+            new Flower();
+            new Bug();
+            new PowerUp();
+            return 1;
+        }
+
         GM.setGameOver(); // Gameover
         return 1;
     }
@@ -58,11 +90,6 @@ void Hero::kbd(const df::EventKeyboard* p_keyboard_event) {
     case df::Keyboard::W:
         if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
             move(-1);
-        break;
-        // down
-    case df::Keyboard::S:
-        if (p_keyboard_event->getKeyboardAction() == df::KEY_DOWN)
-            move(+1);
         break;
     default:
         return;
@@ -106,3 +133,4 @@ void Hero::step() {
     if (moveSlowdown < 0)
         moveSlowdown = 0;
 }
+

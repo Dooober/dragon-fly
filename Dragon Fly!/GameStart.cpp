@@ -3,6 +3,7 @@
 #include "Hero.h"
 #include "Bug.h"
 #include "Flower.h"
+#include "PowerUp.h"
 
 GameStart::GameStart() {
 	setType("GameStart");
@@ -33,6 +34,7 @@ void GameStart::start() {
 		new Flower();
 		new Bug();
 		new Score();
+		new PowerUp();
 		WM.markForDelete(this);
 	}
 }
