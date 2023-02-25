@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "Hero.h"
 #include "Enemy.h"
+#include "GameStart.h"
 
 void loadResources(void);
 void populateWorld(void);
@@ -28,10 +29,11 @@ int main(int argc, char* argv[]) {
 void loadResources(void) {
     RM.loadSprite("sprites/dragonfly-spr.txt", "dragonfly");
     RM.loadSprite("sprites/testbox-spr.txt", "testbox");
+    RM.loadSprite("sprites/gamestart-spr.txt", "gamestart");
+    //RM.loadSprite("sprites/gamestart-spr1.txt", "gamestart"); 
+    // somethings wrong with this sprite (going to fix it later so just using the saucer shoot one to test code)
 }
 
 void populateWorld(void) {
-    new Hero();
-    new Enemy();
-    new Score();
+    new GameStart();
 }
