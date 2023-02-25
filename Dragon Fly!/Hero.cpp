@@ -43,7 +43,7 @@ int Hero::eventHandler(const df::Event* p_e) {
     }
     if (p_e->getType() == df::COLLISION_EVENT) {
         const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
-        LM.writeLog("Collision between %c, %c\n", p_collision_event->getObject1()->getType().c_str(), p_collision_event->getObject2()->getType().c_str());
+        LM.writeLog("Collision between %s, %s\n", p_collision_event->getObject1()->getType().c_str(), p_collision_event->getObject2()->getType().c_str());
         if ((p_collision_event->getObject1()->getType() == "PowerUp") && (p_collision_event->getObject2()->getType() == "Hero")) {
             // Delete Powerup and all Enemies
             WM.markForDelete(p_collision_event->getObject1());
@@ -60,7 +60,7 @@ int Hero::eventHandler(const df::Event* p_e) {
             return 1;
         } else if ((p_collision_event->getObject1()->getType() == "Hero") && (p_collision_event->getObject2()->getType() == "PowerUp")) {
             // Delete Powerup and all Enemies
-            WM.markForDelete(p_collision_event->getObject1());
+            WM.markForDelete(p_collision_event->getObject2());
             df::ObjectList all_enemies = WM.objectsOfType("Enemy");
             df::ObjectListIterator li(&all_enemies);
             while (!li.isDone()) {
