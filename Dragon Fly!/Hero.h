@@ -1,6 +1,7 @@
 // Hero.h
 
 #include "EventKeyboard.h"
+#include "EventCollision.h"
 #include "Object.h"
 #include "Clock.h"
 

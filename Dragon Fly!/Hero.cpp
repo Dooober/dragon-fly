@@ -4,6 +4,8 @@
 #include "ResourceManager.h"
 #include "WorldManager.h"
 #include "EventStep.h"
+#include "EventCollision.h"
+#include "EventOut.h"
 
 // Game includes.
 #include "Hero.h"
@@ -37,6 +39,14 @@ int Hero::eventHandler(const df::Event* p_e) {
     }
     if (p_e->getType() == df::STEP_EVENT) {
         step();
+        return 1;
+    }
+    if (p_e->getType() == df::COLLISION_EVENT) {
+        GM.setGameOver(); // Gameover
+        return 1;
+    }
+    if (p_e->getType() == df::OUT_EVENT) {
+        GM.setGameOver(); // Gameover
         return 1;
     }
     return 0;
