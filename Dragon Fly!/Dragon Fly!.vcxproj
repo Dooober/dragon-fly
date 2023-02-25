@@ -141,11 +141,13 @@
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameStart.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameStart.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Score.h" />
   </ItemGroup>
