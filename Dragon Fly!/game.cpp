@@ -28,10 +28,10 @@ int main(int argc, char* argv[]) {
 
 void loadResources(void) {
     RM.loadSprite("sprites/dragonfly-spr.txt", "dragonfly");
-    RM.loadSprite("sprites/testbox-spr.txt", "testbox");
-    RM.loadSprite("sprites/gamestart-spr.txt", "gamestart");
-    //RM.loadSprite("sprites/gamestart-spr1.txt", "gamestart"); 
-    // somethings wrong with this sprite (going to fix it later so just using the saucer shoot one to test code)
+    RM.loadSprite("sprites/testbox-spr.txt", "flower");
+    RM.loadSprite("sprites/testbug-spr.txt", "bug");
+    //RM.loadSprite("sprites/gamestart-spr.txt", "gamestart");
+    RM.loadSprite("sprites/gamestart-spr1.txt", "gamestart"); 
 }
 
 void populateWorld(void) {

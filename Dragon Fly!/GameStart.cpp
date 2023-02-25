@@ -1,7 +1,8 @@
 #include "GameStart.h"
 #include "EventKeyboard.h"
 #include "Hero.h"
-#include "Enemy.h"
+#include "Bug.h"
+#include "Flower.h"
 
 GameStart::GameStart() {
 	setType("GameStart");
@@ -29,7 +30,8 @@ void GameStart::start() {
 	if (active) {
 		active = !active;
 		new Hero();
-		new Enemy();
+		new Flower();
+		new Bug();
 		new Score();
 		WM.markForDelete(this);
 	}
