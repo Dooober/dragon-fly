@@ -18,7 +18,7 @@ Hero::Hero() {
     setType("Hero");
 
     // Set starting location.
-    df::Vector p(7, 11);
+    df::Vector p(-7, 11);
     setPosition(p);
 
     fallSpeed = 0;
@@ -85,6 +85,14 @@ void Hero::move(int dy) {
 }
 
 void Hero::step() {
+    if (getPosition().getX() < 7) {
+        df::Vector forwards(getPosition().getX() + 0.5, getPosition().getY());
+        WM.moveObject(this, forwards);
+        if (getPosition().getX() > 7) {
+            df::Vector adjust(7, getPosition().getY());
+            WM.moveObject(this, adjust);
+        }
+    }
     // 0.4 is terminal velocity (can be tweaked if it doesnt feel right)
     if (fallSpeed < 0.4) {
         // Increase until terminal velocity
