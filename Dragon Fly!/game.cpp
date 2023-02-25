@@ -30,8 +30,7 @@ void loadResources(void) {
     RM.loadSprite("sprites/dragonfly-spr.txt", "dragonfly");
     RM.loadSprite("sprites/testbox-spr.txt", "flower");
     RM.loadSprite("sprites/testbug-spr.txt", "bug");
-    //RM.loadSprite("sprites/gamestart-spr.txt", "gamestart");
-    RM.loadSprite("sprites/gamestart-spr1.txt", "gamestart"); 
+    RM.loadSprite("sprites/gamestart-spr.txt", "gamestart"); 
 }
 
 void populateWorld(void) {
