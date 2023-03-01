@@ -1,7 +1,7 @@
 #include "Object.h"
 
 enum GameStates {
-	STARTSCREEN, GAMEOVER, BOSS, NORMAL
+	NORMAL, BOSS
 };
 
 class GameState : public df::Object {
@@ -11,11 +11,8 @@ private:
 	int boss_timer; // Time before the boss spawns (in steps)
 	int boss_level; // Level of next boss spawn
 
-	void startscreen(); // shows the GameStart sprite
-	void gameover(); // shows the gameover text when player collides with an enemy
 	void boss(); // starts a boss encounter
 	void normal(); // starts the normal gameplay
-	void start();
 
 public:
 	GameState();

@@ -1,10 +1,10 @@
 #include "GameStart.h"
+#include "WorldManager.h"
 #include "EventKeyboard.h"
 #include "EventStart.h"
 #include "Hero.h"
-#include "Bug.h"
-#include "Flower.h"
-#include "PowerUp.h"
+#include "Score.h"
+#include "GameState.h"
 
 GameStart::GameStart() {
 	setType("GameStart");
@@ -20,17 +20,22 @@ int GameStart::eventHandler(const df::Event* p_e) {
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*)p_e;
 		switch (p_keyboard_event->getKey()) {
 		case df::Keyboard::P:
-			if (active) {
-				active = false;
-				EventStart event_start;
-				WM.onEvent(&event_start);
-				WM.markForDelete(this);
-			}
+			start();
 			break;
 		}
 		return 1;
 	}
 	return 0;
+}
+
+void GameStart::start() {
+	if (active) {
+		active = !active;
+		new Hero();
+		new Score();
+		new GameState();
+		WM.markForDelete(this);
+	}
 }
 
 int GameStart::draw() {

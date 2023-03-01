@@ -15,10 +15,10 @@
 
 GameState::GameState() {
 	setType("Game State");
-	state = STARTSCREEN;
+	state = NORMAL;
 	boss_level = 1;
 	boss_timer = 0;
-	startscreen();
+	normal();
 }
 
 GameState::~GameState() {}
@@ -47,23 +47,7 @@ int GameState::eventHandler(const df::Event* p_e) {
 		normal();
 		state = NORMAL;
 	}
-	if (p_e->getType() == START_EVENT) {
-		if (state == STARTSCREEN) {
-			start();
-			state = NORMAL;
-		}
-	}
     return 0;
-}
-
-void GameState::startscreen() {
-	new GameStart();
-}
-
-void GameState::start() {
-	new Hero();
-	new Score();
-	normal();
 }
 
 void GameState::normal() {
