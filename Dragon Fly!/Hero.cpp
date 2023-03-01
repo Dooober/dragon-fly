@@ -9,6 +9,9 @@
 #include "Bug.h"
 #include "Flower.h"
 #include "PowerUp.h"
+#include "ScoreMultiplier.h"
+
+int scoreMult = 1;
 
 Hero::Hero() {
     // Link to "ship" sprite.
@@ -20,6 +23,9 @@ Hero::Hero() {
     // Set starting location.
     df::Vector p(-7, WM.getView().getVertical() / 2);
     setPosition(p);
+
+    lastPowerUp = -1;
+    powerUpDuration = -1;
 
     fallSpeed = 0;
     moveSlowdown = 10;
@@ -38,41 +44,74 @@ int Hero::eventHandler(const df::Event* p_e) {
         return 1;
     }
     if (p_e->getType() == df::STEP_EVENT) {
+        if (powerUpDuration >= 0)
+            powerUpDuration--;
+        if (powerUpDuration < 0 && lastPowerUp == 0) {
+            lastPowerUp = -1;
+            new Flower();
+            new Bug();
+            new PowerUp();
+        } else if (powerUpDuration < 0 && lastPowerUp == 1) {
+            lastPowerUp = -1;
+            setSolidness(df::HARD);
+            setSprite("dragonflyinvincible");
+            new PowerUp();
+        } else if (powerUpDuration < 0 && lastPowerUp == 2) {
+            lastPowerUp = -1;
+            scoreMult = 1;
+            new PowerUp();
+        }
         step();
         return 1;
     }
     if (p_e->getType() == df::COLLISION_EVENT) {
         const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
         LM.writeLog("Collision between %s, %s\n", p_collision_event->getObject1()->getType().c_str(), p_collision_event->getObject2()->getType().c_str());
-        if ((p_collision_event->getObject1()->getType() == "PowerUp") && (p_collision_event->getObject2()->getType() == "Hero")) {
-            // Delete Powerup and all Enemies
-            WM.markForDelete(p_collision_event->getObject1());
-            df::ObjectList all_enemies = WM.objectsOfType("Enemy");
-            df::ObjectListIterator li(&all_enemies);
-            while (!li.isDone()) {
-                WM.markForDelete(li.currentObject());
-                li.next();
+        int powerUp = rand() % 3;
+        if ((p_collision_event->getObject1()->getType() == "PowerUp") && (p_collision_event->getObject2()->getType() == "Hero") || (p_collision_event->getObject1()->getType() == "Hero") && (p_collision_event->getObject2()->getType() == "PowerUp")) {
+            lastPowerUp = powerUp;
+            // Clear Enemies
+            if (powerUp == 0) {
+                powerUpDuration = 50;
+                df::ObjectList all_powerups = WM.objectsOfType("PowerUp");
+                df::ObjectListIterator lip(&all_powerups);
+                while (!lip.isDone()) {
+                    WM.markForDelete(lip.currentObject());
+                    lip.next();
+                }
+                df::ObjectList all_enemies = WM.objectsOfType("Enemy");
+                df::ObjectListIterator lie(&all_enemies);
+                while (!lie.isDone()) {
+                    WM.markForDelete(lie.currentObject());
+                    lie.next();
+                }
+                return 1;
+            // Invincibility
+            } else if (powerUp == 1) {
+                powerUpDuration = 150;
+                df::ObjectList all_powerups = WM.objectsOfType("PowerUp");
+                df::ObjectListIterator lip(&all_powerups);
+                while (!lip.isDone()) {
+                    WM.markForDelete(lip.currentObject());
+                    lip.next();
+                }
+                setSolidness(df::SPECTRAL);
+                setSprite("dragonflyinvincible");
+                return 1;
+            // 2x Multiplier
+            } else if (powerUp == 2) {
+                powerUpDuration = 250;
+                df::ObjectList all_powerups = WM.objectsOfType("PowerUp");
+                df::ObjectListIterator lip(&all_powerups);
+                while (!lip.isDone()) {
+                    WM.markForDelete(lip.currentObject());
+                    lip.next();
+                }
+                scoreMult = 2;
+                return 1;
             }
-            // Add them back
-            new Flower();
-            new Bug();
-            new PowerUp();
-            return 1;
-        } else if ((p_collision_event->getObject1()->getType() == "Hero") && (p_collision_event->getObject2()->getType() == "PowerUp")) {
-            // Delete Powerup and all Enemies
-            WM.markForDelete(p_collision_event->getObject2());
-            df::ObjectList all_enemies = WM.objectsOfType("Enemy");
-            df::ObjectListIterator li(&all_enemies);
-            while (!li.isDone()) {
-                WM.markForDelete(li.currentObject());
-                li.next();
-            }
-            // Add them back
-            new Flower();
-            new Bug();
-            new PowerUp();
-            return 1;
-        }
+            
+        } 
 
         GM.setGameOver(); // Gameover
         return 1;

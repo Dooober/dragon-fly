@@ -14,6 +14,8 @@ private:
 	void kbd(const df::EventKeyboard* p_keyboard_event);
 	void move(int dy);
 	void step();
+	int powerUpDuration;
+	int lastPowerUp;
 
 public:
 	Hero();

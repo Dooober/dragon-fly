@@ -4,7 +4,8 @@
 
 PowerUp::PowerUp() {
     setType("PowerUp");
-    setSprite("bug");
+    setSolidness(df::SOFT);
+    setSprite("powerup");
     setVelocity(df::Vector(-1, 0));
     setRandomPosition();
     setPosition(df::Vector(WM.getView().getHorizontal() * 3 / 2.5, getPosition().getY()));

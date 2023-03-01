@@ -5,5 +5,4 @@ public:
 	PowerUp();
 	int eventHandler(const df::Event* p_e);
 	void setRandomPosition();
-
 };

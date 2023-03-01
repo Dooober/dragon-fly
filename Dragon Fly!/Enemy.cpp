@@ -1,7 +1,9 @@
 #include "Enemy.h"
+#include "ScoreMultiplier.h"
 
 Enemy::Enemy() {
 	setType("Enemy");
+    setSolidness(df::SOFT);
 }
 
 Enemy::~Enemy() {}
@@ -9,7 +11,7 @@ Enemy::~Enemy() {}
 int Enemy::eventHandler(const df::Event* p_e) {
     if (p_e->getType() == df::OUT_EVENT) {
         setRandomPosition();
-        df::EventView ev(SCORE_STRING, 1, true);
+        df::EventView ev(SCORE_STRING, 1 * scoreMult, true);
         WM.onEvent(&ev);
         return 1;
     }

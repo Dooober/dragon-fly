@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     }
 
     LM.setFlush(true);
-
+    
     loadResources();
     populateWorld();
 
@@ -27,10 +27,15 @@ int main(int argc, char* argv[]) {
 }
 
 void loadResources(void) {
+
+    // both commented sprites have issues and I an not sure what is wrong with them
+
     RM.loadSprite("sprites/dragonfly-spr.txt", "dragonfly");
+    //RM.loadSprite("sprites/dragonflyinvincible-spr.txt", "dragonflyinvincible"); 
     RM.loadSprite("sprites/testbox-spr.txt", "flower");
     RM.loadSprite("sprites/testbug-spr.txt", "bug");
     RM.loadSprite("sprites/gamestart-spr.txt", "gamestart"); 
+    //RM.loadSprite("sprites/powerup-spr.txt", "powerup");
 }
 
 void populateWorld(void) {
