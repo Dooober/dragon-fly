@@ -143,6 +143,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameStart.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="PowerUp.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Bug.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Flower.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameStart.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="PowerUp.h" />

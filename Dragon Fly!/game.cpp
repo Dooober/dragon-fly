@@ -36,6 +36,8 @@ void loadResources(void) {
     RM.loadSprite("sprites/testbug-spr.txt", "bug");
     RM.loadSprite("sprites/gamestart-spr.txt", "gamestart"); 
     //RM.loadSprite("sprites/powerup-spr.txt", "powerup");
+    RM.loadSprite("sprites/gameover-spr.txt", "gameover");
+
 }
 
 void populateWorld(void) {
