@@ -10,6 +10,7 @@
 #include "Flower.h"
 #include "PowerUp.h"
 #include "ScoreMultiplier.h"
+#include "GameOver.h"
 
 int scoreMult = 1;
 
@@ -118,11 +119,11 @@ int Hero::eventHandler(const df::Event* p_e) {
             
         } 
 
-        GM.setGameOver(); // Gameover
+        new GameOver(); // Gameover
         return 1;
     }
     if (p_e->getType() == df::OUT_EVENT) {
-        GM.setGameOver(); // Gameover
+        new GameOver(); // Gameover
         return 1;
     }
     return 0;

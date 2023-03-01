@@ -42,15 +42,16 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EventBossKill.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameStart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EventStart.cpp">
+	<ClCompile Include="EventStart.cpp">
+		<Filter>Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="GameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScoreMultiplier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

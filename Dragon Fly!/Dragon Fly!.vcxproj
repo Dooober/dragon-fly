@@ -146,6 +146,7 @@
     <ClCompile Include="EventStart.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameStart.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Hero.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="EventBossKill.h" />
     <ClInclude Include="EventStart.h" />
     <ClInclude Include="Flower.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameStart.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Hero.h" />
