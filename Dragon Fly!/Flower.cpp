@@ -8,7 +8,7 @@ Flower::Flower() {
 
 void Flower::setRandomPosition() {
     int view_vertical = (int)WM.getView().getVertical();
-    int modifier = view_vertical / 6;
+    int modifier = view_vertical / 4;
     int y_random = rand() % view_vertical; // Random y value on view
     if (y_random >= (view_vertical / 2)) { // add modifier to eliminate these enemies in the center
         y_random += modifier;

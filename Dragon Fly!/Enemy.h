@@ -7,7 +7,7 @@
 #include "Score.h"
 #include "EventView.h"
 
-#define MOVE_SPEED 1.0f
+#define MOVE_SPEED 0.75f
 
 class Enemy : public df::Object {
 

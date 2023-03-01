@@ -1,5 +1,6 @@
 #include "PowerUp.h"
 #include "EventOut.h"
+#include "EventStart.h"
 #include "WorldManager.h"
 
 PowerUp::PowerUp() {
@@ -14,6 +15,10 @@ PowerUp::PowerUp() {
 int PowerUp::eventHandler(const df::Event* p_e) {
     if (p_e->getType() == df::OUT_EVENT) {
         setRandomPosition();
+        return 1;
+    }
+    if (p_e->getType() == START_EVENT) {
+        WM.markForDelete(this);
         return 1;
     }
     return 0;

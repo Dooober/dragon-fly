@@ -1,4 +1,6 @@
 #include "Enemy.h"
+
+#include "EventStart.h"
 #include "ScoreMultiplier.h"
 
 Enemy::Enemy() {
@@ -13,6 +15,10 @@ int Enemy::eventHandler(const df::Event* p_e) {
         setRandomPosition();
         df::EventView ev(SCORE_STRING, 1 * scoreMult, true);
         WM.onEvent(&ev);
+        return 1;
+    }
+    if (p_e->getType() == START_EVENT) {
+        WM.markForDelete(this);
         return 1;
     }
     return 0;

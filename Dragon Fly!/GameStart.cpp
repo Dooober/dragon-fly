@@ -1,5 +1,6 @@
 #include "GameStart.h"
 #include "EventKeyboard.h"
+#include "EventStart.h"
 #include "Hero.h"
 #include "Bug.h"
 #include "Flower.h"
@@ -19,24 +20,17 @@ int GameStart::eventHandler(const df::Event* p_e) {
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*)p_e;
 		switch (p_keyboard_event->getKey()) {
 		case df::Keyboard::P:
-			start();
+			if (active) {
+				active = false;
+				EventStart event_start;
+				WM.onEvent(&event_start);
+				WM.markForDelete(this);
+			}
 			break;
 		}
 		return 1;
 	}
 	return 0;
-}
-
-void GameStart::start() {
-	if (active) {
-		active = !active;
-		new Hero();
-		new Flower();
-		new Bug();
-		new Score();
-		new PowerUp();
-		WM.markForDelete(this);
-	}
 }
 
 int GameStart::draw() {

@@ -17,6 +17,11 @@ Hero::Hero() {
     // Link to "ship" sprite.
     setSprite("dragonfly");
 
+    // Make box one char smaller on all sides for better collisions
+    df::Vector new_corner(getBox().getCorner() + df::Vector(1, 1));
+    df::Box new_box(new_corner, getBox().getHorizontal() - 2, getBox().getVertical() - 2);
+    setBox(new_box);
+
     // Set object type.
     setType("Hero");
 
@@ -54,7 +59,7 @@ int Hero::eventHandler(const df::Event* p_e) {
         } else if (powerUpDuration < 0 && lastPowerUp == 1) {
             lastPowerUp = -1;
             setSolidness(df::HARD);
-            setSprite("dragonflyinvincible");
+            setSprite("dragonfly");
             new PowerUp();
         } else if (powerUpDuration < 0 && lastPowerUp == 2) {
             lastPowerUp = -1;

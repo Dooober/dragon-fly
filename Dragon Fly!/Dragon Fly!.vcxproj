@@ -108,7 +108,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\dragonfly-engine\Include;..\SFML-2.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -139,22 +139,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bug.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EventBossKill.cpp" />
+    <ClCompile Include="EventStart.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameStart.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="PowerUp.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Bug.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EventBossKill.h" />
+    <ClInclude Include="EventStart.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameStart.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="PowerUp.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="ScoreMultiplier.h" />
   </ItemGroup>
