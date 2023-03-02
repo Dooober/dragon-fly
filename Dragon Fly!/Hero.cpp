@@ -4,6 +4,7 @@
 #include "WorldManager.h"
 #include "EventStep.h"
 #include "EventCollision.h"
+#include "EventClear.h"
 #include "EventOut.h"
 #include "Hero.h"
 #include "Bug.h"
@@ -11,6 +12,8 @@
 #include "PowerUp.h"
 #include "ScoreMultiplier.h"
 #include "GameOver.h"
+#include "PowerUpString.h"
+#include "EventPowerUpEnd.h"
 
 int scoreMult = 1;
 
@@ -54,66 +57,47 @@ int Hero::eventHandler(const df::Event* p_e) {
             powerUpDuration--;
         if (powerUpDuration < 0 && lastPowerUp == 0) {
             lastPowerUp = -1;
-            new Flower();
-            new Bug();
-            new PowerUp();
+            EventPowerUpEnd epue(true);
+            WM.onEvent(&epue);
         } else if (powerUpDuration < 0 && lastPowerUp == 1) {
             lastPowerUp = -1;
             setSolidness(df::HARD);
-            setSprite("dragonfly");
-            new PowerUp();
+            getAnimation().getSprite()->setColor(df::GREEN);
+            EventPowerUpEnd epue;
+            WM.onEvent(&epue);
         } else if (powerUpDuration < 0 && lastPowerUp == 2) {
             lastPowerUp = -1;
             scoreMult = 1;
-            new PowerUp();
+            EventPowerUpEnd epue;
+            WM.onEvent(&epue);
         }
         step();
         return 1;
     }
     if (p_e->getType() == df::COLLISION_EVENT) {
         const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
-        LM.writeLog("Collision between %s, %s\n", p_collision_event->getObject1()->getType().c_str(), p_collision_event->getObject2()->getType().c_str());
         int powerUp = rand() % 3;
-        if ((p_collision_event->getObject1()->getType() == "PowerUp") && (p_collision_event->getObject2()->getType() == "Hero") || (p_collision_event->getObject1()->getType() == "Hero") && (p_collision_event->getObject2()->getType() == "PowerUp")) {
+        if ((p_collision_event->getObject1()->getType() == "PowerUp") || (p_collision_event->getObject2()->getType() == "PowerUp")) {
             lastPowerUp = powerUp;
             // Clear Enemies
             if (powerUp == 0) {
                 powerUpDuration = 50;
-                df::ObjectList all_powerups = WM.objectsOfType("PowerUp");
-                df::ObjectListIterator lip(&all_powerups);
-                while (!lip.isDone()) {
-                    WM.markForDelete(lip.currentObject());
-                    lip.next();
-                }
-                df::ObjectList all_enemies = WM.objectsOfType("Enemy");
-                df::ObjectListIterator lie(&all_enemies);
-                while (!lie.isDone()) {
-                    WM.markForDelete(lie.currentObject());
-                    lie.next();
-                }
+                EventClear es;
+                WM.onEvent(&es);
+                new PowerUpString(CLEAR, powerUpDuration);
                 return 1;
             // Invincibility
             } else if (powerUp == 1) {
                 powerUpDuration = 150;
-                df::ObjectList all_powerups = WM.objectsOfType("PowerUp");
-                df::ObjectListIterator lip(&all_powerups);
-                while (!lip.isDone()) {
-                    WM.markForDelete(lip.currentObject());
-                    lip.next();
-                }
                 setSolidness(df::SPECTRAL);
-                setSprite("dragonflyinvincible");
+                getAnimation().getSprite()->setColor(df::YELLOW);
+                new PowerUpString(INVINCIBILITY, powerUpDuration);
                 return 1;
             // 2x Multiplier
             } else if (powerUp == 2) {
                 powerUpDuration = 250;
-                df::ObjectList all_powerups = WM.objectsOfType("PowerUp");
-                df::ObjectListIterator lip(&all_powerups);
-                while (!lip.isDone()) {
-                    WM.markForDelete(lip.currentObject());
-                    lip.next();
-                }
                 scoreMult = 2;
+                new PowerUpString(MULTIPLIER, powerUpDuration);
                 return 1;
             }
             

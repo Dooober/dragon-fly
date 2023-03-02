@@ -1,10 +1,10 @@
 #include "GameStart.h"
 #include "WorldManager.h"
 #include "EventKeyboard.h"
-#include "EventStart.h"
 #include "Hero.h"
 #include "Score.h"
 #include "GameState.h"
+#include "GameManager.h"
 
 GameStart::GameStart() {
 	setType("GameStart");
@@ -20,7 +20,13 @@ int GameStart::eventHandler(const df::Event* p_e) {
 		df::EventKeyboard* p_keyboard_event = (df::EventKeyboard*)p_e;
 		switch (p_keyboard_event->getKey()) {
 		case df::Keyboard::P:
-			start();
+			start(false);
+			break;
+		case df::Keyboard::ESCAPE:
+			GM.setGameOver();
+			break;
+		case df::Keyboard::TILDE:
+			start(true);
 			break;
 		}
 		return 1;
@@ -28,12 +34,12 @@ int GameStart::eventHandler(const df::Event* p_e) {
 	return 0;
 }
 
-void GameStart::start() {
+void GameStart::start(bool secret) {
 	if (active) {
 		active = !active;
 		new Hero();
 		new Score();
-		new GameState();
+		new GameState(secret);
 		WM.markForDelete(this);
 	}
 }

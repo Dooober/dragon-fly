@@ -13,8 +13,18 @@ void Bug::setRandomPosition() {
     int y_random = rand() % view_vertical; // Random y value on view
     
     // KNOWN BUG, MAX AND MIN NEED TO BE ON VIEW
-    max_y = y_random + BUG_DISTANCE;
-    min_y = y_random - BUG_DISTANCE;
+    if (y_random + BUG_DISTANCE > view_vertical) {
+        max_y = y_random;
+        min_y = y_random - 2 * BUG_DISTANCE;
+    }
+    else if (y_random - BUG_DISTANCE < 0) {
+        max_y = y_random + 2 * BUG_DISTANCE;
+        min_y = y_random;
+    }
+    else {
+        max_y = y_random + BUG_DISTANCE;
+        min_y = y_random - BUG_DISTANCE;
+    }
 
     int x_pos = WM.getView().getHorizontal();
     setPosition(df::Vector(x_pos, y_random));

@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-#include "EventStart.h"
+#include "EventClear.h"
 #include "ScoreMultiplier.h"
 
 Enemy::Enemy() {
@@ -17,7 +17,7 @@ int Enemy::eventHandler(const df::Event* p_e) {
         WM.onEvent(&ev);
         return 1;
     }
-    if (p_e->getType() == START_EVENT) {
+    if (p_e->getType() == CLEAR_EVENT) {
         WM.markForDelete(this);
         return 1;
     }

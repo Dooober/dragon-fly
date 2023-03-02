@@ -10,6 +10,7 @@ enum BossState {
 
 class Boss : public df::Object {
 private:
+	bool secret; // Is this secret mode?
 	// General boss attributes
 	int difficulty; // Difficulty set when creating the boss
 	BossState state; // The current state that the boss is in

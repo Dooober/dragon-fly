@@ -3,7 +3,8 @@
 #include "EventStep.h"
 #include "EventKeyboard.h"
 #include "EventBossKill.h"
-#include "EventStart.h"
+#include "EventClear.h"
+#include "EventPowerUpEnd.h"
 #include "GameManager.h"
 
 #include "Hero.h"
@@ -13,12 +14,21 @@
 #include "Score.h"
 #include "PowerUp.h"
 
-GameState::GameState() {
+GameState::GameState(bool secret) {
 	setType("Game State");
-	state = NORMAL;
-	boss_level = 1;
-	boss_timer = 0;
-	normal();
+	this->secret = secret;
+	if (secret) {
+		state = BOSS;
+		boss_level = 5;
+		boss_timer = 0;
+		boss();
+	}
+	else {
+		state = NORMAL;
+		boss_level = 1;
+		boss_timer = 0;
+		normal();
+	}
 }
 
 GameState::~GameState() {}
@@ -44,8 +54,22 @@ int GameState::eventHandler(const df::Event* p_e) {
 		return 1;
 	}
 	if (p_e->getType() == BOSS_KILL_EVENT) {
-		normal();
-		state = NORMAL;
+		if (secret) {
+			boss();
+		} else {
+			normal();
+			state = NORMAL;
+		}
+	}
+	if (p_e->getType() == POWERUP_END_EVENT) {
+		if (state == NORMAL) {
+			EventPowerUpEnd* p_e_powerup_end = (EventPowerUpEnd*)p_e;
+			if (p_e_powerup_end->respawn) {
+				new Bug();
+				new Flower();
+			}
+			PowerUp();
+		}
 	}
     return 0;
 }
@@ -59,7 +83,7 @@ void GameState::normal() {
 }
 
 void GameState::boss() {
-	EventStart es;
+	EventClear es;
 	WM.onEvent(&es);
 
 	new Boss(boss_level);

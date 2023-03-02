@@ -29,14 +29,14 @@ int main(int argc, char* argv[]) {
 
 void loadResources(void) {
     RM.loadSprite("sprites/dragonfly-spr.txt", "dragonfly");
-    RM.loadSprite("sprites/dragonflyinvincible-spr.txt", "dragonflyinvincible"); 
     RM.loadSprite("sprites/flower-spr.txt", "flower");
     RM.loadSprite("sprites/bug-spr.txt", "bug");
     RM.loadSprite("sprites/gamestart-spr.txt", "gamestart"); 
     RM.loadSprite("sprites/powerup-spr.txt", "powerup");
     RM.loadSprite("sprites/projectile-spr.txt", "projectile");
     RM.loadSprite("sprites/gameover-spr.txt", "gameover");
-    RM.loadSprite("sprites/boss-spr.txt", "boss");
+    if(RM.loadSprite("sprites/boss-spr.txt", "boss"))
+        LM.writeLog("Failed to load boss sprite");
 }
 
 void populateWorld(void) {

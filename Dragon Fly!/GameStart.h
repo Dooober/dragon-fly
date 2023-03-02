@@ -4,7 +4,7 @@
 
 class GameStart : public df::ViewObject {
 	private:
-		void start();
+		void start(bool secret);
 
 	public:
 		bool active;

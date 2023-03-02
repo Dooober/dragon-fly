@@ -10,16 +10,17 @@
 
 Boss::Boss(int difficulty) {
 	this->difficulty = difficulty;
+
 	setType("Boss");
 	setSprite("boss");
-	setPosition(df::Vector(WM.getBoundary().getHorizontal() + 5, WM.getBoundary().getVertical() / 2)); // Position off screen
+	setPosition(df::Vector(WM.getBoundary().getHorizontal() + 10, WM.getBoundary().getVertical() / 2)); // Position off screen
 	setVelocity(df::Vector(-0.5, 0)); // Move on screen slowly
 
 	state = ENTERING;
 	lifetime = difficulty + 2; // 3 actions to start, then add 1 per difficulty level
-	rest_position = getPosition() + df::Vector(-12, 0); // Rest position on the screen
+	rest_position = getPosition() + df::Vector(-17, 0); // Rest position on the screen
 
-	if (difficulty > 12) // time between actions = 3 seconds - 0.25 seconds per difficulty, until difficulty 12
+	if (difficulty > 6) // time between actions = 3 seconds - 0.25 seconds per difficulty, until difficulty 6
 		time_between_actions = 0;
 	else
 		time_between_actions = (6 - difficulty) * 15; // (3 * 30) - (difficulty * 15) = (6 - difficulty) * 15
@@ -46,7 +47,7 @@ int Boss::eventHandler(const df::Event* p_e) {
         return 1;
     }
     if (p_e->getType() == df::OUT_EVENT) {
-		df::EventView ev(SCORE_STRING, 50 * difficulty, true);
+		df::EventView ev(SCORE_STRING, 20 * difficulty, true);
 		EventBossKill ebk;
 		WM.onEvent(&ev);
 		WM.onEvent(&ebk);
@@ -90,13 +91,13 @@ void Boss::enter() {
 void Boss::leave() {}
 
 void Boss::wait() {
-	if (lifetime == 0) {
-		state = LEAVING;
-		setVelocity(df::Vector(0.5, 0));
-		return; 	// If this triggers, we want the function to end here so that the state can never change
-	}
-	
 	if (wait_timer == 0) {
+		if (lifetime == 0) {
+			state = LEAVING;
+			setVelocity(df::Vector(0.5, 0));
+			return;
+		}
+
 		// Choose between the two attacks
 		int choice = rand() % 2;
 		if (choice == 0)
@@ -108,8 +109,7 @@ void Boss::wait() {
 		// Reset the wait timer, and decrease the lifetime
 		wait_timer = time_between_actions;
 		lifetime--;
-	}
-	else wait_timer--;
+	} else wait_timer--;
 }
 
 // Calculates the hero's position
@@ -138,7 +138,6 @@ void Boss::shoot() {
 		df::Vector dir = calculateDir(hero_pos, pos);
 		new Projectile(pos, projectile_speed, dir);
 
-
 		// Reset timer, increase projectile count
 		steps_until_shot = shooting_delay;
 		projectile_count++;
@@ -148,6 +147,8 @@ void Boss::shoot() {
 	// Runs last so that the state does not change before an extra projectile is shot
 	if (projectile_count == max_projectiles) {
 		projectile_count = 0;
+		// Set the wait timer so the boss waits for the last projectile to exit screen before moving (doesn't have to be perfect)
+		wait_timer += (int)(getPosition().getX() / projectile_speed);
 		state = WAITING;
 	}
 }

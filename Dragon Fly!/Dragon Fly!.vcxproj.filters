@@ -48,10 +48,19 @@
     <ClCompile Include="GameStart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-	<ClCompile Include="EventStart.cpp">
-		<Filter>Source Files</Filter>
-	</ClCompile>
+    <ClCompile Include="EventClear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="GameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUpString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventPowerUpEnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,13 +98,19 @@
     <ClInclude Include="EventBossKill.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EventStart.h">
+    <ClInclude Include="EventClear.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScoreMultiplier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameOver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUpString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventPowerUpEnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
