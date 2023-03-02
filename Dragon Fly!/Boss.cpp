@@ -11,7 +11,7 @@
 Boss::Boss(int difficulty) {
 	this->difficulty = difficulty;
 	setType("Boss");
-	setSprite("dragonfly");
+	setSprite("boss");
 	setPosition(df::Vector(WM.getBoundary().getHorizontal() + 5, WM.getBoundary().getVertical() / 2)); // Position off screen
 	setVelocity(df::Vector(-0.5, 0)); // Move on screen slowly
 

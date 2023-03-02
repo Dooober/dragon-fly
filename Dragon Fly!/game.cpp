@@ -36,6 +36,7 @@ void loadResources(void) {
     RM.loadSprite("sprites/powerup-spr.txt", "powerup");
     RM.loadSprite("sprites/projectile-spr.txt", "projectile");
     RM.loadSprite("sprites/gameover-spr.txt", "gameover");
+    RM.loadSprite("sprites/boss-spr.txt", "boss");
 }
 
 void populateWorld(void) {
