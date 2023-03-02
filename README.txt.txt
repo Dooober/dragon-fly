@@ -10,6 +10,7 @@ We used Cooper's engine to make the game
 --------------
 File Structure:
 /Dragon Fly! - Folder for the game itself
+ - /sounds - sound and music files
  - /sprites - sprite files
  - game.cpp - the start point for the game
  - All .cpp and .h files are included directly in this folder
@@ -24,10 +25,18 @@ Readme.txt
 Classes included in the game:
 
 GameStart - start menu for the game, once play is pressed the game starts
+GameOver - script that runs when the game ends due to player death
+GameState - state machine for the game itself, controlls normal gameplay vs boss encounters
 Hero - the dragonfly hero
-PowerUp - a base class for powerups
+PowerUp - powerup object on screen
+PowerUpString - ViewObject that shows the time left of the powerup
 Score - the score ViewObject
+Boss - a boss using a finite state machine
+Projectile - a projectile that the boss shoots at the player
 Enemy - a base class for enemy types
- - Flower - a tall enemy that "stays still"
- - Bug - a smaller enemy that moves up and down
+Flower - a tall enemy that "stays still"
+Bug - a smaller enemy that moves up and down
+EventBossKill - Event triggered when the boss is killed
+EventClear - Event triggered when needing to clear all enemies off the screen
+EventPowerUpEnd - Event triggered when the powerup timer completes
 
