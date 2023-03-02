@@ -5,6 +5,7 @@
 #include "Score.h"
 #include "GameState.h"
 #include "GameManager.h"
+#include "ResourceManager.h"
 
 GameStart::GameStart() {
 	setType("GameStart");
@@ -13,6 +14,9 @@ GameStart::GameStart() {
 
 	// Put in center of screen
 	setLocation(df::CENTER_CENTER);
+
+	p_music = RM.getMusic("menu");
+	p_music->play();
 }
 
 int GameStart::eventHandler(const df::Event* p_e) {
@@ -37,10 +41,16 @@ int GameStart::eventHandler(const df::Event* p_e) {
 void GameStart::start(bool secret) {
 	if (active) {
 		active = !active;
+		p_music->stop();
+		df::ObjectList all_objects = WM.getAllObjects();
+		df::ObjectListIterator li(&all_objects);
+		while (!li.isDone()) {
+			WM.markForDelete(li.currentObject());
+			li.next();
+		}
 		new Hero();
 		new Score();
 		new GameState(secret);
-		WM.markForDelete(this);
 	}
 }
 

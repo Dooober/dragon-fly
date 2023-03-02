@@ -2,6 +2,7 @@
 #include "EventOut.h"
 #include "EventClear.h"
 #include "EventCollision.h"
+#include "ResourceManager.h"
 #include "WorldManager.h"
 
 PowerUp::PowerUp() {
@@ -18,6 +19,11 @@ int PowerUp::eventHandler(const df::Event* p_e) {
         const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
         if ((p_collision_event->getObject1()->getType() == "Hero") || (p_collision_event->getObject2()->getType() == "Hero")) {
             WM.markForDelete(this);
+            df::Sound* p_sound = RM.getSound("powerup");
+            if (p_sound)
+                p_sound->play();
+            
+            
         }
         return 1;
     }

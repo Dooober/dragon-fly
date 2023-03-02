@@ -7,10 +7,11 @@
 #include "EventOut.h"
 #include "EventBossKill.h"
 #include "WorldManager.h"
+#include "ResourceManager.h"
 
 Boss::Boss(int difficulty) {
 	this->difficulty = difficulty;
-
+	
 	setType("Boss");
 	setSprite("boss");
 	setPosition(df::Vector(WM.getBoundary().getHorizontal() + 10, WM.getBoundary().getVertical() / 2)); // Position off screen
@@ -141,6 +142,11 @@ void Boss::shoot() {
 		// Reset timer, increase projectile count
 		steps_until_shot = shooting_delay;
 		projectile_count++;
+
+		// Play sound
+		df::Sound* p_sound = RM.getSound("shoot");
+		if (p_sound)
+			p_sound->play();
 	}
 	else steps_until_shot--;
 
@@ -163,6 +169,11 @@ void Boss::attack() {
 		df::Vector dir = calculateDir(hero_pos, getPosition());
 		setDirection(dir);
 		setSpeed(attack_speed);
+
+		// Play sound
+		df::Sound* p_sound = RM.getSound("attack");
+		if (p_sound)
+			p_sound->play();
 	}
 
 	// If the boss misses the hero, change state

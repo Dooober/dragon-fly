@@ -17,6 +17,10 @@
 GameState::GameState(bool secret) {
 	setType("Game State");
 	this->secret = secret;
+
+	p_normal_music = RM.getMusic("normal");
+	p_boss_music = RM.getMusic("boss");
+
 	if (secret) {
 		state = BOSS;
 		boss_level = 5;
@@ -38,6 +42,7 @@ int GameState::eventHandler(const df::Event* p_e) {
 		if (state == NORMAL) {
 			boss_timer--;
 			if (boss_timer == 0) {
+				p_normal_music->stop();
 				boss();
 				state = BOSS;
 			}
@@ -54,12 +59,14 @@ int GameState::eventHandler(const df::Event* p_e) {
 		return 1;
 	}
 	if (p_e->getType() == BOSS_KILL_EVENT) {
+		p_boss_music->stop();
 		if (secret) {
 			boss();
 		} else {
 			normal();
 			state = NORMAL;
 		}
+		return 1;
 	}
 	if (p_e->getType() == POWERUP_END_EVENT) {
 		if (state == NORMAL) {
@@ -68,13 +75,15 @@ int GameState::eventHandler(const df::Event* p_e) {
 				new Bug();
 				new Flower();
 			}
-			PowerUp();
+			new PowerUp();
 		}
+		return 1;
 	}
     return 0;
 }
 
 void GameState::normal() {
+	p_normal_music->play();
 	new Flower();
 	new Bug();
 	new PowerUp();
@@ -83,6 +92,7 @@ void GameState::normal() {
 }
 
 void GameState::boss() {
+	p_boss_music->play();
 	EventClear es;
 	WM.onEvent(&es);
 

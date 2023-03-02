@@ -2,6 +2,7 @@
 #define __BOSS_H__
 
 #include "Object.h"
+#include "ResourceManager.h"
 
 #define ENTER_LEAVE_SPEED 1
 enum BossState {
@@ -11,6 +12,7 @@ enum BossState {
 class Boss : public df::Object {
 private:
 	bool secret; // Is this secret mode?
+
 	// General boss attributes
 	int difficulty; // Difficulty set when creating the boss
 	BossState state; // The current state that the boss is in

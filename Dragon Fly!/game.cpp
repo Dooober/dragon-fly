@@ -35,8 +35,14 @@ void loadResources(void) {
     RM.loadSprite("sprites/powerup-spr.txt", "powerup");
     RM.loadSprite("sprites/projectile-spr.txt", "projectile");
     RM.loadSprite("sprites/gameover-spr.txt", "gameover");
-    if(RM.loadSprite("sprites/boss-spr.txt", "boss"))
-        LM.writeLog("Failed to load boss sprite");
+    RM.loadSprite("sprites/boss-spr.txt", "boss");
+
+    RM.loadSound("sounds/boss-attack-sound.wav", "attack");
+    RM.loadSound("sounds/projectile-sound.wav", "shoot");
+    RM.loadSound("sounds/powerup-sound.wav", "powerup");
+    RM.loadMusic("sounds/boss-music.wav", "boss");
+    RM.loadMusic("sounds/main-menu-music.flac", "menu");
+    RM.loadMusic("sounds/normal-music.flac", "normal");
 }
 
 void populateWorld(void) {
