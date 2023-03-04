@@ -76,9 +76,10 @@ int Hero::eventHandler(const df::Event* p_e) {
     }
     if (p_e->getType() == df::COLLISION_EVENT) {
         const df::EventCollision* p_collision_event = dynamic_cast <df::EventCollision const*> (p_e);
-        int powerUp = rand() % 3;
-        if ((p_collision_event->getObject1()->getType() == "PowerUp") || (p_collision_event->getObject2()->getType() == "PowerUp")) {
+        if ((p_collision_event->getObject1()->getType() == "PowerUp" && p_collision_event->getObject2()->getType() == "Hero") || (p_collision_event->getObject1()->getType() == "PowerUp" && p_collision_event->getObject2()->getType() == "PowerUp")) {
+            int powerUp = rand() % 3;
             lastPowerUp = powerUp;
+            LM.writeLog("%d", powerUp);
             // Clear Enemies
             if (powerUp == 0) {
                 powerUpDuration = 50;
